@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        maven {
+            name 'JFrog OSS snapshot repo'
+            url  'https://oss.jfrog.org/oss-snapshot-local/'
+        }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'me.champeau.gradle:antlr4-gradle-plugin:0.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'me.champeau.gradle.antlr4'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.antlr:antlr4:4.6'
+}
+
+sourceCompatibility = 1.8
+mainClassName = 'org.preonlang.MainClass'
+
+// make the Java compile task depend on the antlr4 task
+compileJava.dependsOn antlr4
+
+// add the generated source files to the list of java sources
+sourceSets.main.java.srcDirs += antlr4.output
+
+// add antlr4 to classpath
+configurations {
+    compile.extendsFrom antlr4
+}
+
+antlr4 {
+    extraArgs = ['-package', 'org.preonlang']
+}
