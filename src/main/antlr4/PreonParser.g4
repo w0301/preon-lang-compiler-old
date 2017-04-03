@@ -2,12 +2,36 @@ parser grammar PreonParser;
 
 options { tokenVocab=PreonLexer; }
 
-identifier
-  : IDENTIFIER
+integerValue
+  : INTEGER
+  ;
+
+floatValue
+  : FLOAT
+  ;
+
+boolValue
+  : BOOL
+  ;
+
+charValue
+  : CHAR
+  ;
+
+stringValue
+  : STRING
   ;
 
 constant
-  : INTEGER
+  : integerValue
+  | floatValue
+  | boolValue
+  | charValue
+  | stringValue
+  ;
+
+identifier
+  : IDENTIFIER
   ;
 
 operator
@@ -20,14 +44,14 @@ closedFunctionExpression
   | LPAREN expression RPAREN
   ;
 
-closedOperatorExpression
+operatorExpression
   : closedFunctionExpression
-  | closedOperatorExpression operator closedOperatorExpression
+  | operatorExpression operator operatorExpression
   ;
 
 expression
-  : closedFunctionExpression
-  | closedOperatorExpression
+  : operatorExpression
+  | closedFunctionExpression
   | identifier closedFunctionExpression*
   ;
 
