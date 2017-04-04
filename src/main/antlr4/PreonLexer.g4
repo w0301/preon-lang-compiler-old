@@ -26,6 +26,10 @@ STRING
   : '"' .*? '"'
   ;
 
+NATIVE
+  : 'native'
+  ;
+
 IDENTIFIER
   : [a-z] [a-zA-Z0-9]*
   ;
@@ -34,16 +38,14 @@ EQ
   : '='
   ;
 
+// + - * / & | > < ^ = ,
+// P M S D A O G L K E C
 OPERATOR
-  : [+\-*/&|~><!^=]+
+  : [+\-*/&|><^=,]+
   ;
 
-SEMICOLON
+DEFINITION_DELIM
   : ';'
-  ;
-
-COLON
-  : ','
   ;
 
 LPAREN

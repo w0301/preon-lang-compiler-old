@@ -1,6 +1,9 @@
 parser grammar PreonParser;
 
-options { tokenVocab=PreonLexer; }
+options {
+  tokenVocab=PreonLexer;
+  superClass=BasePreonParser;
+}
 
 integerValue
   : INTEGER
@@ -38,25 +41,54 @@ operator
   : OPERATOR
   ;
 
-closedFunctionExpression
+closedExpression
   : constant
   | identifier
   | LPAREN expression RPAREN
   ;
 
-operatorExpression
-  : closedFunctionExpression
-  | operatorExpression operator operatorExpression
+operatorExpression6
+  : operatorExpression6 ({getPrecedence(_input.LT(1)) == 6}? operator operatorExpression6)
+  | closedExpression
+  ;
+
+operatorExpression5
+  : operatorExpression5 ({getPrecedence(_input.LT(1)) == 5}? operator operatorExpression5)
+  | operatorExpression6
+  ;
+
+operatorExpression4
+  : operatorExpression4 ({getPrecedence(_input.LT(1)) == 4}? operator operatorExpression4)
+  | operatorExpression5
+  ;
+
+operatorExpression3
+  : operatorExpression3 ({getPrecedence(_input.LT(1)) == 3}? operator operatorExpression3)
+  | operatorExpression4
+  ;
+
+operatorExpression2
+  : operatorExpression2 ({getPrecedence(_input.LT(1)) == 2}? operator operatorExpression2)
+  | operatorExpression3
+  ;
+
+operatorExpression1
+  : operatorExpression1 ({getPrecedence(_input.LT(1)) == 1}? operator operatorExpression1)
+  | operatorExpression2
   ;
 
 expression
-  : operatorExpression
-  | closedFunctionExpression
-  | identifier closedFunctionExpression*
+  : closedExpression
+  | operatorExpression1
+  | identifier (closedExpression)*
+  ;
+
+nativeDeclaration
+  : NATIVE
   ;
 
 functionDefinition
-  : identifier (identifier)* EQ expression SEMICOLON
+  : identifier (identifier)* EQ (expression | nativeDeclaration) DEFINITION_DELIM
   ;
 
 operatorPrecedence
@@ -64,7 +96,7 @@ operatorPrecedence
   ;
 
 operatorDefinition
-  : LPAREN operator COLON operatorPrecedence RPAREN (identifier)* EQ expression SEMICOLON
+  : LPAREN operator operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) DEFINITION_DELIM
   ;
 
 file
