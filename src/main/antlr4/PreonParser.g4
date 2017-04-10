@@ -80,23 +80,31 @@ operatorExpression1
 expression
   : closedExpression
   | operatorExpression1
-  | identifier (closedExpression)*
+  | identifier (closedExpression)+
   ;
 
 nativeDeclaration
   : NATIVE
   ;
 
+functionNameIdentifier
+  : identifier
+  ;
+
 functionDefinition
-  : identifier (identifier)* EQ (expression | nativeDeclaration) DEFINITION_DELIM
+  : functionNameIdentifier (identifier)* EQ (expression | nativeDeclaration) DEFINITION_DELIM
   ;
 
 operatorPrecedence
   : INTEGER
   ;
 
+operatorNameIdentifier
+  : operator
+  ;
+
 operatorDefinition
-  : LPAREN operator operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) DEFINITION_DELIM
+  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) DEFINITION_DELIM
   ;
 
 file
