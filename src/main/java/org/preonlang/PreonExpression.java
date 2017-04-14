@@ -1,5 +1,9 @@
 package org.preonlang;
 
-public abstract class PreonExpression extends Expression {
+import java.util.List;
 
+public abstract class PreonExpression extends Expression {
+    public PreonExpression(List<ArgumentIdentifier> arguments) {
+        super(arguments);
+    }
 }

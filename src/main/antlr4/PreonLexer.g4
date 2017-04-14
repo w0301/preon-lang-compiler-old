@@ -6,7 +6,7 @@ fragment WHITESPACE
 
 INTEGER
   : [1-9] [0-9]*
-  | WHITESPACE [+\-] [1-9] [0-9]*
+  | WHITESPACE [\-] [1-9] [0-9]*
   ;
 
 FLOAT
@@ -28,6 +28,18 @@ STRING
 
 NATIVE
   : 'native'
+  ;
+
+IF
+  : 'if'
+  ;
+
+THEN
+  : 'then'
+  ;
+
+ELSE
+  : 'else'
   ;
 
 IDENTIFIER

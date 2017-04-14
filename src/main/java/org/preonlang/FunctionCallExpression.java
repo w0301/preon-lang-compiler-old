@@ -3,13 +3,15 @@ package org.preonlang;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
+import java.util.ArrayList;
 
 public class FunctionCallExpression extends PreonExpression {
-    private final String name;
-    private final List<ArgumentExpression> arguments;
+    private final FunctionIdentifier identifier;
+    private final List<Expression> arguments;
 
-    public FunctionCallExpression(String name, List<ArgumentExpression> arguments) {
-        this.name = name;
+    public FunctionCallExpression(FunctionIdentifier identifier, List<Expression> arguments) {
+        super(new ArrayList<ArgumentIdentifier>());
+        this.identifier = identifier;
         this.arguments = arguments;
     }
 
@@ -21,10 +23,12 @@ public class FunctionCallExpression extends PreonExpression {
 
     @Override
     public void writeJava(Writer writer) throws IOException {
-        writer.write(name + "(");
-        for (ArgumentExpression arg : arguments) {
+        identifier.writeJava(writer);
+
+        writer.write("(");
+        for (Expression arg : arguments) {
             arg.writeJava(writer);
-            if (arg != arguments.get(arguments.size() -1)) writer.write(",");
+            if (arg != arguments.get(arguments.size() - 1)) writer.write(",");
         }
         writer.write(")");
     }

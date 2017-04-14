@@ -3,30 +3,25 @@ package org.preonlang;
 import java.util.List;
 
 public class Function {
-    private final String name;
-    private final List<String> arguments;
+    private final FunctionIdentifier identifier;
+    private final List<ArgumentIdentifier> arguments;
     private final Expression expression;
 
-    public Function(String name, List<String> arguments, Expression expression) {
-        this.name = name;
+    public Function(FunctionIdentifier identifier, List<ArgumentIdentifier> arguments, Expression expression) {
+        this.identifier = identifier;
         this.arguments = arguments;
         this.expression = expression;
     }
 
-    public String getPreonName() {
-        return name;
+    public FunctionIdentifier getIdentifier() {
+        return identifier;
     }
 
-    public String getTargetName() {
-        // TODO : change name if operator symbols are in
-        return name;
-    }
-
-    public List<String> getArguments() {
+    public List<ArgumentIdentifier> getArguments() {
         return arguments;
     }
 
-    public Type getArgumentType(String argument) {
+    public Type getArgumentType(ArgumentIdentifier argument) {
         // TODO : get type from expression (or cache hashmap)
         return Type.ANY;
     }

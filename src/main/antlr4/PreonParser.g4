@@ -41,45 +41,44 @@ operator
   : OPERATOR
   ;
 
+conditionExpression
+  : IF expression THEN expression ELSE expression
+  ;
+
 closedExpression
   : constant
   | identifier
+  | conditionExpression
   | LPAREN expression RPAREN
   ;
 
-operatorExpression6
-  : operatorExpression6 ({getPrecedence(_input.LT(1)) == 6}? operator operatorExpression6)
-  | closedExpression
-  ;
-
-operatorExpression5
-  : operatorExpression5 ({getPrecedence(_input.LT(1)) == 5}? operator operatorExpression5)
-  | operatorExpression6
-  ;
-
-operatorExpression4
-  : operatorExpression4 ({getPrecedence(_input.LT(1)) == 4}? operator operatorExpression4)
-  | operatorExpression5
-  ;
-
-operatorExpression3
-  : operatorExpression3 ({getPrecedence(_input.LT(1)) == 3}? operator operatorExpression3)
-  | operatorExpression4
-  ;
-
-operatorExpression2
-  : operatorExpression2 ({getPrecedence(_input.LT(1)) == 2}? operator operatorExpression2)
-  | operatorExpression3
-  ;
-
-operatorExpression1
-  : operatorExpression1 ({getPrecedence(_input.LT(1)) == 1}? operator operatorExpression1)
-  | operatorExpression2
+operatorExpression
+  : closedExpression
+  // left associative operators
+  | operatorExpression {getPrecedence(_input.LT(1)) == 9 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 8 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 7 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 6 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 5 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 4 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 3 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 2 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 1 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  // right associative operators
+  | operatorExpression {getPrecedence(_input.LT(1)) == 9 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 8 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 7 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 6 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 5 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 4 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 3 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 2 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | operatorExpression {getPrecedence(_input.LT(1)) == 1 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
   ;
 
 expression
   : closedExpression
-  | operatorExpression1
+  | operatorExpression
   | identifier (closedExpression)+
   ;
 
