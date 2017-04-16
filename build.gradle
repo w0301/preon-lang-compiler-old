@@ -39,5 +39,5 @@ configurations {
 }
 
 antlr4 {
-    extraArgs = ['-package', 'org.preonlang']
+    extraArgs = ['-package', 'org.preonlang.antlr']
 }

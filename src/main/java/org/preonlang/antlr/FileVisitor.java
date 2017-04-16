@@ -1,6 +1,7 @@
-package org.preonlang;
+package org.preonlang.antlr;
 
 import java.util.Map;
+import org.preonlang.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

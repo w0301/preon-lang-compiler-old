@@ -54,26 +54,33 @@ closedExpression
 
 operatorExpression
   : closedExpression
-  // left associative operators
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 9 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 9}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 8 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 8}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 7 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 7}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 6 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 6}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 5 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 5}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 4 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 4}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 3 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 3}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 2 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 2}? operator operatorExpression
+
   | operatorExpression {getPrecedence(_input.LT(1)) == 1 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  // right associative operators
-  | operatorExpression {getPrecedence(_input.LT(1)) == 9 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 8 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 7 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 6 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 5 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 4 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 3 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 2 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
-  | operatorExpression {getPrecedence(_input.LT(1)) == 1 && !isLeftAssociative(_input.LT(1))}? operator operatorExpression
+  | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 1}? operator operatorExpression
   ;
 
 expression
@@ -90,12 +97,16 @@ functionNameIdentifier
   : identifier
   ;
 
+definitionDelim
+  : DEFINITION_DELIM
+  ;
+
 functionDefinition
-  : functionNameIdentifier (identifier)* EQ (expression | nativeDeclaration) DEFINITION_DELIM
+  : functionNameIdentifier (identifier)* EQ (expression | nativeDeclaration) definitionDelim
   ;
 
 operatorPrecedence
-  : INTEGER
+  : OPERATOR_PRECEDENCE
   ;
 
 operatorNameIdentifier
@@ -103,7 +114,7 @@ operatorNameIdentifier
   ;
 
 operatorDefinition
-  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) DEFINITION_DELIM
+  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) definitionDelim
   ;
 
 file

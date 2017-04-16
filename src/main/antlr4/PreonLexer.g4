@@ -50,10 +50,14 @@ EQ
   : '='
   ;
 
-// + - * / & | > < ^ = ,
-// P M S D A O G L K E C
+// + - * / & | > < ^ = , %
+// P M S D A O G L K E C Q
 OPERATOR
-  : [+\-*/&|><^=,]+
+  : [+\-*/&|><^=,%]+
+  ;
+
+OPERATOR_PRECEDENCE
+  : [1-9] [lr]
   ;
 
 DEFINITION_DELIM
@@ -69,5 +73,5 @@ RPAREN
   ;
 
 WHITESPACE_SKIP
-  : [ \t\r\n]+ -> channel(HIDDEN)
+  : [\r\n \t]+ -> channel(HIDDEN)
   ;

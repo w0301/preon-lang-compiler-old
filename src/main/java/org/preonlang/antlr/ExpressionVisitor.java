@@ -1,4 +1,6 @@
-package org.preonlang;
+package org.preonlang.antlr;
+
+import org.preonlang.*;
 
 public class ExpressionVisitor extends PreonParserBaseVisitor<Expression> {
     @Override

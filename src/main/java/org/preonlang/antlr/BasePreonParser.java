@@ -1,5 +1,6 @@
-package org.preonlang;
+package org.preonlang.antlr;
 
+import org.preonlang.*;
 import java.util.HashMap;
 import org.antlr.v4.runtime.*;
 
