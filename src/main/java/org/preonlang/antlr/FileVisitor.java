@@ -8,19 +8,7 @@ import java.util.stream.Stream;
 public class FileVisitor extends PreonParserBaseVisitor<File> {
     @Override
     public File visitFile(PreonParser.FileContext ctx) {
-        FunctionIdentifierVisitor functionIdentifierVisitor = new FunctionIdentifierVisitor();
-        Stream<FunctionIdentifier> functionIdentifiers = ctx
-            .functionDefinition()
-            .stream()
-            .map(function -> function.accept(functionIdentifierVisitor));
-        Stream<FunctionIdentifier> operatorIdentifiers = ctx
-            .operatorDefinition()
-            .stream()
-            .map(operator -> operator.accept(functionIdentifierVisitor));
-        Map<String, FunctionIdentifier> identifiers = Stream.concat(functionIdentifiers, operatorIdentifiers)
-            .collect(Collectors.toMap(id -> id.getPreonName(), id -> id));
-
-        FunctionVisitor functionVisitor = new FunctionVisitor(identifiers);
+        FunctionVisitor functionVisitor = new FunctionVisitor();
         Stream<Function> functions = ctx
             .functionDefinition()
             .stream()

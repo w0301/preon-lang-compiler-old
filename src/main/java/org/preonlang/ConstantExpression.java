@@ -2,21 +2,14 @@ package org.preonlang;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 
-public class ConstantExpression extends PreonExpression {
+public class ConstantExpression extends Expression {
     private final Type type;
     private final String value;
 
     public ConstantExpression(Type type, String value) {
-        super(new ArrayList<ArgumentIdentifier>());
         this.type = type;
         this.value = value;
-    }
-
-    @Override
-    public Type getType() {
-        return type;
     }
 
     @Override

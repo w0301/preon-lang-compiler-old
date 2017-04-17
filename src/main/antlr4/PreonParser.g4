@@ -89,20 +89,12 @@ expression
   | identifier (closedExpression)+
   ;
 
-nativeDeclaration
-  : NATIVE
-  ;
-
 functionNameIdentifier
   : identifier
   ;
 
-definitionDelim
-  : DEFINITION_DELIM
-  ;
-
 functionDefinition
-  : functionNameIdentifier (identifier)* EQ (expression | nativeDeclaration) definitionDelim
+  : functionNameIdentifier (identifier)* EQ expression DEFINITION_DELIM
   ;
 
 operatorPrecedence
@@ -114,7 +106,7 @@ operatorNameIdentifier
   ;
 
 operatorDefinition
-  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ (expression | nativeDeclaration) definitionDelim
+  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ expression DEFINITION_DELIM
   ;
 
 file

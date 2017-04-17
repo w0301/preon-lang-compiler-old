@@ -1,36 +1,16 @@
 package org.preonlang;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
-public class Function {
-    private final FunctionIdentifier identifier;
-    private final List<ArgumentIdentifier> arguments;
-    private final Expression expression;
+public abstract class Function {
+    public abstract String getName();
+    public abstract Type getReturnType();
 
-    public Function(FunctionIdentifier identifier, List<ArgumentIdentifier> arguments, Expression expression) {
-        this.identifier = identifier;
-        this.arguments = arguments;
-        this.expression = expression;
-    }
+    public abstract int getArgumentsCount();
+    public abstract List<String> getArgumentNames();
+    public abstract Type getArgumentType(String name);
 
-    public FunctionIdentifier getIdentifier() {
-        return identifier;
-    }
-
-    public List<ArgumentIdentifier> getArguments() {
-        return arguments;
-    }
-
-    public Type getArgumentType(ArgumentIdentifier argument) {
-        // TODO : get type from expression (or cache hashmap)
-        return Type.ANY;
-    }
-
-    public Type getReturnType() {
-        return expression.getType();
-    }
-
-    public Expression getExpression() {
-        return expression;
-    }
+    public abstract void writeJava(Writer writer) throws IOException;
 }

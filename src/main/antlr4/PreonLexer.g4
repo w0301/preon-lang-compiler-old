@@ -11,7 +11,7 @@ INTEGER
 
 FLOAT
   : [0-9]+ '.' [0-9]+
-  | WHITESPACE [+\-] [0-9]+ '.' [0-9]+
+  | WHITESPACE [\-] [0-9]+ '.' [0-9]+
   ;
 
 BOOL
@@ -24,10 +24,6 @@ CHAR
 
 STRING
   : '"' .*? '"'
-  ;
-
-NATIVE
-  : 'native'
   ;
 
 IF
@@ -50,6 +46,18 @@ EQ
   : '='
   ;
 
+LPAREN
+  : '('
+  ;
+
+RPAREN
+  : ')'
+  ;
+
+DEFINITION_DELIM
+  : ';'
+  ;
+
 // + - * / & | > < ^ = , %
 // P M S D A O G L K E C Q
 OPERATOR
@@ -58,18 +66,6 @@ OPERATOR
 
 OPERATOR_PRECEDENCE
   : [1-9] [lr]
-  ;
-
-DEFINITION_DELIM
-  : ';'
-  ;
-
-LPAREN
-  : '('
-  ;
-
-RPAREN
-  : ')'
   ;
 
 WHITESPACE_SKIP

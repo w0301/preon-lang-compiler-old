@@ -4,26 +4,20 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.ArrayList;
+import org.preonlang.util.IdentifierUtils;
 
-public class FunctionCallExpression extends PreonExpression {
-    private final FunctionIdentifier identifier;
+public class FunctionCallExpression extends Expression {
+    private final String name;
     private final List<Expression> arguments;
 
-    public FunctionCallExpression(FunctionIdentifier identifier, List<Expression> arguments) {
-        super(new ArrayList<ArgumentIdentifier>());
-        this.identifier = identifier;
+    public FunctionCallExpression(String name, List<Expression> arguments) {
+        this.name = name;
         this.arguments = arguments;
     }
 
     @Override
-    public Type getType() {
-        // TODO
-        return Type.ANY;
-    }
-
-    @Override
     public void writeJava(Writer writer) throws IOException {
-        identifier.writeJava(writer);
+        writer.write(IdentifierUtils.getTargetName(name));
 
         writer.write("(");
         for (Expression arg : arguments) {

@@ -2,24 +2,16 @@ package org.preonlang;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 
-public class ArgumentExpression extends PreonExpression {
-    private final ArgumentIdentifier identifier;
+public class ArgumentExpression extends Expression {
+    private final String name;
 
-    public ArgumentExpression(ArgumentIdentifier identifier) {
-        super(new ArrayList<ArgumentIdentifier>());
-        this.identifier = identifier;
-    }
-
-    @Override
-    public Type getType() {
-        // TODO
-        return Type.ANY;
+    public ArgumentExpression(String name) {
+        this.name = name;
     }
 
     @Override
     public void writeJava(Writer writer) throws IOException {
-        identifier.writeJava(writer);
+        writer.write(name);
     }
 }
