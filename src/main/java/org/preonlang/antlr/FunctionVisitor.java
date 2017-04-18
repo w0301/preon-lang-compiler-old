@@ -9,6 +9,7 @@ public class FunctionVisitor extends PreonParserBaseVisitor<Function> {
         return new PreonFunction(
             ctx.functionNameIdentifier().getText(),
             ctx.identifier().stream().map(id -> id.getText()).collect(Collectors.toList()),
+            null, null, // TODO
             new ExpressionVisitor().visitExpression(ctx.expression())
         );
     }
@@ -18,6 +19,7 @@ public class FunctionVisitor extends PreonParserBaseVisitor<Function> {
         return new PreonFunction(
             ctx.operatorNameIdentifier().getText(),
             ctx.identifier().stream().map(id -> id.getText()).collect(Collectors.toList()),
+            null, null, // TODO
             new ExpressionVisitor().visitExpression(ctx.expression())
         );
     }

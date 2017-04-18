@@ -6,11 +6,7 @@ import java.util.List;
 
 public abstract class Function {
     public abstract String getName();
-    public abstract Type getReturnType();
-
-    public abstract int getArgumentsCount();
-    public abstract List<String> getArgumentNames();
-    public abstract Type getArgumentType(String name);
+    public abstract boolean hasTypes(Type returnType, Type... argumentTypes);
 
     public abstract void writeJava(Writer writer) throws IOException;
 }
