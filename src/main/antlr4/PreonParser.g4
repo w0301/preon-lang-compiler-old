@@ -33,6 +33,10 @@ constant
   | stringValue
   ;
 
+type
+  : TYPE
+  ;
+
 identifier
   : IDENTIFIER
   ;
@@ -93,8 +97,13 @@ functionNameIdentifier
   : identifier
   ;
 
+argumentType
+  : type
+  ;
+
 functionDefinition
-  : functionNameIdentifier (identifier)* EQ expression DEFINITION_DELIM
+  : functionNameIdentifier COLON (argumentType DEFINITION_ARG_SEPARATOR)* type
+    functionNameIdentifier (identifier)* EQ expression DEFINITION_DELIM
   ;
 
 operatorPrecedence
@@ -106,7 +115,8 @@ operatorNameIdentifier
   ;
 
 operatorDefinition
-  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN identifier identifier EQ expression DEFINITION_DELIM
+  : LPAREN operatorNameIdentifier operatorPrecedence RPAREN COLON argumentType DEFINITION_ARG_SEPARATOR argumentType DEFINITION_ARG_SEPARATOR type
+    LPAREN operatorNameIdentifier RPAREN identifier identifier EQ expression DEFINITION_DELIM
   ;
 
 file

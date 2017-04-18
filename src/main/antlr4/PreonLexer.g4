@@ -42,8 +42,20 @@ IDENTIFIER
   : [a-z] [a-zA-Z0-9]*
   ;
 
+TYPE
+  : [A-Z] [a-zA-Z0-9]*
+  ;
+
 EQ
   : '='
+  ;
+
+COLON
+  : ':'
+  ;
+
+DEFINITION_ARG_SEPARATOR
+  : '->'
   ;
 
 LPAREN
