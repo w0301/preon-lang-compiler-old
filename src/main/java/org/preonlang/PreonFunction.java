@@ -50,12 +50,13 @@ public class PreonFunction extends Function {
             final String name = argumentNames.get(i);
             final Type type = argumentTypes.get(i);
 
+            writer.write("final ");
             type.writeJava(writer);
             writer.write(" " + name);
             if (i != argumentNames.size() - 1) writer.write(", ");
         }
         writer.write(") {\n\t\treturn ");
-        // TODO : write expression here!
-        writer.write(";\n\t}");
+        getExpression().writeJava(writer);
+        writer.write(";\n\t}\n");
     }
 }

@@ -4,7 +4,7 @@ public class IdentifierUtils {
     public static String getTargetName(String preonName) {
         // + - * / & | > < ^ = , %
         // P M S D A O G L K E C Q
-        return preonName
+        return "preon_" + preonName
             .replace('+', 'P')
             .replace('-', 'M')
             .replace('*', 'S')

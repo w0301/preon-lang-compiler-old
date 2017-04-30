@@ -2,6 +2,8 @@ package org.preonlang;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ConditionExpression extends Expression {
     private final Expression conditionExpression;
@@ -24,6 +26,15 @@ public class ConditionExpression extends Expression {
 
     public Expression getElseExpression() {
         return elseExpression;
+    }
+
+    @Override
+    public List<Expression> getSubExpressions() {
+        List<Expression> res = new ArrayList<>();
+        res.add(conditionExpression);
+        res.add(thenExpression);
+        res.add(elseExpression);
+        return res;
     }
 
     @Override

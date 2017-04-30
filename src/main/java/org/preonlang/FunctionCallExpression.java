@@ -16,6 +16,11 @@ public class FunctionCallExpression extends Expression {
     }
 
     @Override
+    public List<Expression> getSubExpressions() {
+        return arguments;
+    }
+
+    @Override
     public void writeJava(Writer writer) throws IOException {
         writer.write(IdentifierUtils.getTargetName(name));
 

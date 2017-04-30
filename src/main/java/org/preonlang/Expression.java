@@ -5,5 +5,6 @@ import java.io.Writer;
 import java.util.List;
 
 public abstract class Expression {
+    public abstract List<Expression> getSubExpressions();
     public abstract void writeJava(Writer writer) throws IOException;
 }

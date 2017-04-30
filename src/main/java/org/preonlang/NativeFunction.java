@@ -115,13 +115,14 @@ public class NativeFunction extends Function {
             writer.write(" " + IdentifierUtils.getTargetName(getName()) + "(");
 
             List<Type> argumentTypes = signature.getArgumentTypes();
+            for (int i = 0; i < argumentTypes.size(); i++) {
+                final Type type = argumentTypes.get(i);
+                final String name = "arg" + i;
 
-            int i = 0;
-            for (Type type : argumentTypes) {
-                final String name = "arg" + (i++);
+                writer.write("final ");
                 type.writeJava(writer);
                 writer.write(" " + name);
-                if (type != argumentTypes.get(argumentTypes.size() - 1)) writer.write(", ");
+                if (i != argumentTypes.size() - 1) writer.write(", ");
             }
             writer.write(") {\n\t\treturn " + signature.getJavaCode() + ";\n\t}\n");
         }

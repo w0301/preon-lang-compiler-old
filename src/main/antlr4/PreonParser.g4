@@ -87,10 +87,14 @@ operatorExpression
   | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 1}? operator operatorExpression
   ;
 
+functionCallExpression
+  : identifier (closedExpression)+
+  ;
+
 expression
   : closedExpression
   | operatorExpression
-  | identifier (closedExpression)+
+  | functionCallExpression
   ;
 
 functionNameIdentifier
