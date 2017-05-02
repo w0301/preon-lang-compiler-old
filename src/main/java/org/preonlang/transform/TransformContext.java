@@ -27,10 +27,10 @@ public class TransformContext {
         return parents.get(index);
     }
 
-    public ProgramNode getParent(Class<? extends ProgramNode> clazz) {
+    public <T extends ProgramNode> T getParent(Class<T> clazz) {
         for (int i = parents.size() - 1; i >= 0; i--) {
             final ProgramNode node = parents.get(i);
-            if (clazz.isInstance(node)) return node;
+            if (clazz.isInstance(node)) return clazz.cast(node);
         }
         return null;
     }
