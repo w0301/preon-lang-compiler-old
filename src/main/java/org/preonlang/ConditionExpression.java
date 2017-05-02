@@ -29,8 +29,8 @@ public class ConditionExpression extends Expression {
     }
 
     @Override
-    public List<Expression> getSubExpressions() {
-        List<Expression> res = new ArrayList<>();
+    public List<? extends ProgramNode> getSubNodes() {
+        final List<Expression> res = new ArrayList<>();
         res.add(conditionExpression);
         res.add(thenExpression);
         res.add(elseExpression);

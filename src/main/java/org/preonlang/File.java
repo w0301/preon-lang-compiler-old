@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-public class File {
+public class File extends ProgramNode {
     private final List<Function> functions;
 
     public File(List<Function> functions) {
         this.functions = functions;
+    }
+
+    @Override
+    public List<? extends ProgramNode> getSubNodes() {
+        return functions;
     }
 
     public List<Function> getFunctions() {

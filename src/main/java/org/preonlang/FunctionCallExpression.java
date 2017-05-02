@@ -3,7 +3,6 @@ package org.preonlang;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
-import java.util.ArrayList;
 import org.preonlang.util.IdentifierUtils;
 
 public class FunctionCallExpression extends Expression {
@@ -15,8 +14,16 @@ public class FunctionCallExpression extends Expression {
         this.arguments = arguments;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Expression> getArguments() {
+        return arguments;
+    }
+
     @Override
-    public List<Expression> getSubExpressions() {
+    public List<? extends ProgramNode> getSubNodes() {
         return arguments;
     }
 

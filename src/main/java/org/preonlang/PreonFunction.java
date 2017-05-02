@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import org.preonlang.util.IdentifierUtils;
 
 public class PreonFunction extends Function {
@@ -26,6 +27,22 @@ public class PreonFunction extends Function {
         this.expression = expression;
     }
 
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public Type getReturnType() {
+        return returnType;
+    }
+
+    public List<Type> getArgumentTypes() {
+        return argumentTypes;
+    }
+
+    public List<String> getArgumentNames() {
+        return argumentNames;
+    }
+
     @Override
     public String getName() {
         return name;
@@ -37,8 +54,10 @@ public class PreonFunction extends Function {
             Arrays.equals(this.argumentTypes.toArray(new Type[this.argumentTypes.size()]), argumentTypes);
     }
 
-    public Expression getExpression() {
-        return expression;
+    public List<? extends ProgramNode> getSubNodes() {
+        final List<Expression> res = new ArrayList<>();
+        res.add(expression);
+        return res;
     }
 
     @Override

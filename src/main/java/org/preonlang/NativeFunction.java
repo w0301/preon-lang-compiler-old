@@ -94,6 +94,10 @@ public class NativeFunction extends Function {
         this.signatures = Arrays.asList(signatures);
     }
 
+    public List<Signature> getSignatures() {
+        return signatures;
+    }
+
     @Override
     public String getName() {
         return name;
