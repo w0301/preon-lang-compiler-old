@@ -17,16 +17,16 @@ public class NativeFunction extends Function {
     public static class Signature {
         private final String javaCode;
         private final Type returnType;
-        private final Type[] argumentTypes;
+        private final List<Type> argumentTypes;
 
         public Signature(String javaCode, Type returnType, Type... argumentTypes) {
             this.javaCode = javaCode;
             this.returnType = returnType;
-            this.argumentTypes = argumentTypes;
+            this.argumentTypes = Arrays.asList(argumentTypes);
         }
 
-        public boolean hasTypes(Type returnType, Type... argumentTypes) {
-            return this.returnType == returnType && Arrays.equals(this.argumentTypes, argumentTypes);
+        public boolean hasTypes(List<Type> argumentTypes) {
+            return this.argumentTypes.equals(argumentTypes);
         }
 
         public String getJavaCode() {
@@ -38,7 +38,7 @@ public class NativeFunction extends Function {
         }
 
         public List<Type> getArgumentTypes() {
-            return Arrays.asList(argumentTypes);
+            return argumentTypes;
         }
     }
 
@@ -98,17 +98,16 @@ public class NativeFunction extends Function {
         return signatures;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public Type getReturnType(List<Type> types) {
+        for (Signature sig : signatures) {
+            if (sig.hasTypes(types)) return sig.getReturnType();
+        }
+        return Type.ANY;
     }
 
     @Override
-    public boolean hasTypes(Type returnType, Type... argumentTypes) {
-        for (Signature signature : signatures) {
-            if (signature.hasTypes(returnType, argumentTypes)) return true;
-        }
-        return false;
+    public String getName() {
+        return name;
     }
 
     @Override

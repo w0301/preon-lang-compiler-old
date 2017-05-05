@@ -6,12 +6,18 @@ import java.util.List;
 import org.preonlang.util.IdentifierUtils;
 
 public class FunctionCallExpression extends Expression {
+    private final Type type;
     private final String name;
     private final List<Expression> arguments;
 
-    public FunctionCallExpression(String name, List<Expression> arguments) {
+    public FunctionCallExpression(Type type, String name, List<Expression> arguments) {
+        this.type = type;
         this.name = name;
         this.arguments = arguments;
+    }
+
+    public FunctionCallExpression(String name, List<Expression> arguments) {
+        this(Type.ANY, name, arguments);
     }
 
     public String getName() {
@@ -20,6 +26,11 @@ public class FunctionCallExpression extends Expression {
 
     public List<Expression> getArguments() {
         return arguments;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 
     @Override

@@ -12,6 +12,7 @@ public class ConstantExpression extends Expression {
         this.value = value;
     }
 
+    @Override
     public Type getType() {
         return type;
     }

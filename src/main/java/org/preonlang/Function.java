@@ -6,7 +6,5 @@ import java.util.List;
 
 public abstract class Function extends ProgramNode {
     public abstract String getName();
-    public abstract boolean hasTypes(Type returnType, Type... argumentTypes);
-
     public abstract void writeJava(Writer writer) throws IOException;
 }

@@ -43,17 +43,17 @@ public class PreonFunction extends Function {
         return argumentNames;
     }
 
+    public Type getArgumentType(String name) {
+        final int index = argumentNames.indexOf(name);
+        return index < 0 ? Type.ANY : argumentTypes.get(index);
+    }
+
     @Override
     public String getName() {
         return name;
     }
 
     @Override
-    public boolean hasTypes(Type returnType, Type... argumentTypes) {
-        return this.returnType == returnType &&
-            Arrays.equals(this.argumentTypes.toArray(new Type[this.argumentTypes.size()]), argumentTypes);
-    }
-
     public List<? extends ProgramNode> getSubNodes() {
         final List<Expression> res = new ArrayList<>();
         res.add(expression);

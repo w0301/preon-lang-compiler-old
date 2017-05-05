@@ -29,6 +29,11 @@ public class ConditionExpression extends Expression {
     }
 
     @Override
+    public Type getType() {
+        return thenExpression.getType();
+    }
+
+    @Override
     public List<? extends ProgramNode> getSubNodes() {
         final List<Expression> res = new ArrayList<>();
         res.add(conditionExpression);

@@ -5,4 +5,5 @@ import java.io.Writer;
 import java.util.List;
 
 public abstract class Expression extends ProgramNode {
+    public abstract Type getType();
 }
