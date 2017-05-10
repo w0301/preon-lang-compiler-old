@@ -76,6 +76,37 @@ public class NativeFunction extends Function {
                 new Signature("(double)arg0 * arg1", Type.FLOAT, Type.INT, Type.FLOAT),
                 new Signature("arg0 * (double)arg1", Type.FLOAT, Type.FLOAT, Type.INT),
                 new Signature("arg0 * arg1", Type.FLOAT, Type.FLOAT, Type.FLOAT)
+            ),
+            new NativeFunction(
+                "&&",
+                new Signature("arg0 && arg1", Type.BOOL, Type.BOOL, Type.BOOL)
+            ),
+            new NativeFunction(
+                "||",
+                new Signature("arg0 || arg1", Type.BOOL, Type.BOOL, Type.BOOL)
+            ),
+            new NativeFunction(
+                "==",
+                new Signature("arg0 == arg1", Type.BOOL, Type.INT, Type.INT),
+                new Signature("arg0 == arg1", Type.BOOL, Type.FLOAT, Type.FLOAT),
+                new Signature("arg0 == arg1", Type.BOOL, Type.BOOL, Type.BOOL),
+                new Signature("arg0 == arg1", Type.BOOL, Type.CHAR, Type.CHAR),
+                new Signature("arg0.equals(arg1)", Type.BOOL, Type.STRING, Type.STRING)
+            ),
+            new NativeFunction(
+                "<",
+                new Signature("arg0 < arg1", Type.BOOL, Type.INT, Type.INT),
+                new Signature("arg0 < arg1", Type.BOOL, Type.INT, Type.FLOAT),
+                new Signature("arg0 < arg1", Type.BOOL, Type.FLOAT, Type.INT),
+                new Signature("arg0 < arg1", Type.BOOL, Type.FLOAT, Type.FLOAT)
+            ),
+            new NativeFunction(
+                "toInt",
+                new Signature("(int)arg0", Type.INT, Type.FLOAT)
+            ),
+            new NativeFunction(
+                "toFloat",
+                new Signature("(double)arg0", Type.FLOAT, Type.INT)
             )
         };
         nativeFunctions = Stream.of(functions).collect(Collectors.toMap(f -> f.getName(), f -> f));

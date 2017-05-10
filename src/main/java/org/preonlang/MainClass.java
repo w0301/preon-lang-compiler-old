@@ -13,7 +13,7 @@ public class MainClass {
     public static void main(String[] args) throws IOException {
         final PreonLexer lexer = new PreonLexer(new ANTLRInputStream(
             "fn1 : Int -> Int\n" +
-            "fn1 a = if True then 2 else 3 ;\n" +
+            "fn1 a = if a == 4 then 2 else 3 ;\n" +
             "fn2 : Int -> Int\n" +
             "fn2 a = fn1 12 ;\n" +
             "main : Int\n" +
