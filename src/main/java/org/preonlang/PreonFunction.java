@@ -48,6 +48,10 @@ public class PreonFunction extends Function {
         return index < 0 ? Type.ANY : argumentTypes.get(index);
     }
 
+    public boolean hasArgumentTypes(List<Type> argumentTypes) {
+        return this.argumentTypes.equals(argumentTypes);
+    }
+
     @Override
     public String getName() {
         return name;

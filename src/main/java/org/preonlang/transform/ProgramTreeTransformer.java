@@ -1,5 +1,7 @@
 package org.preonlang.transform;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import org.preonlang.ArgumentExpression;
 import org.preonlang.ConditionExpression;
@@ -12,12 +14,26 @@ import org.preonlang.NativeFunction;
 import org.preonlang.PreonFunction;
 
 public abstract class ProgramTreeTransformer {
+    private final List<TransformError> errors = new ArrayList<>();
+
     public File transform(File file) {
         return new File(
             file.getFunctions().stream()
                 .map(f -> transformFunction(f, new TransformContext(file)))
                 .collect(Collectors.toList())
         );
+    }
+
+    public boolean hasError() {
+        return !errors.isEmpty();
+    }
+
+    public List<TransformError> getErrors() {
+        return errors;
+    }
+
+    protected void addError(TransformError error) {
+        errors.add(error);
     }
 
     protected Function transformFunction(Function function, TransformContext context) {

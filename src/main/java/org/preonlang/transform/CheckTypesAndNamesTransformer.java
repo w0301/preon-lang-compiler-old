@@ -23,7 +23,10 @@ public class CheckTypesAndNamesTransformer extends ProgramTreeTransformer {
     protected Expression transformFunctionCallExpression(FunctionCallExpression expression, TransformContext context) {
         Type calledType = Type.ANY;
         final Function calledFunction = functions.get(expression.getName());
-        // TODO : check not existent function
+        if (calledFunction == null) {
+            addError(new TransformError("Function '" + expression.getName() + "' is not defined."));
+            return super.transformFunctionCallExpression(expression, context);
+        }
 
         final List<Expression> arguments = expression.getArguments()
             .stream()
@@ -32,13 +35,19 @@ public class CheckTypesAndNamesTransformer extends ProgramTreeTransformer {
 
         if (calledFunction instanceof PreonFunction) {
             calledType = ((PreonFunction) calledFunction).getReturnType();
-            // TODO : check types
+            if (!((PreonFunction) calledFunction).hasArgumentTypes(arguments.stream().map(a -> a.getType()).collect(Collectors.toList()))) {
+                addError(new TransformError("Supplied arguments for function '" + expression.getName() + "' have bad types."));
+                return super.transformFunctionCallExpression(expression, context);
+            }
         }
         else {
             calledType = ((NativeFunction) calledFunction).getReturnType(
                 arguments.stream().map(a -> a.getType()).collect(Collectors.toList())
             );
-            // TODO : check type == Type.ANY
+            if (calledType == Type.ANY) {
+                addError(new TransformError("Supplied arguments for function '" + expression.getName() + "' have bad types."));
+                return super.transformFunctionCallExpression(expression, context);
+            }
         }
 
         return new FunctionCallExpression(calledType, expression.getName(), arguments);
@@ -49,7 +58,15 @@ public class CheckTypesAndNamesTransformer extends ProgramTreeTransformer {
         final Expression condExp = transformExpression(expression.getConditionExpression(), context.withNewParent(expression));
         final Expression thenExp = transformExpression(expression.getThenExpression(), context.withNewParent(expression));
         final Expression elseExp = transformExpression(expression.getElseExpression(), context.withNewParent(expression));
-        // TODO : check types
+
+        if (condExp.getType() != Type.BOOL) {
+            addError(new TransformError("Supplied expression for if condition is not boolean."));
+            return super.transformConditionExpression(expression, context);
+        }
+        if (thenExp.getType() != elseExp.getType()) {
+            addError(new TransformError("Supplied expressions for then and else branches are not of same type."));
+            return super.transformConditionExpression(expression, context);
+        }
 
         return new ConditionExpression(condExp, thenExp, elseExp);
     }
@@ -57,8 +74,11 @@ public class CheckTypesAndNamesTransformer extends ProgramTreeTransformer {
     @Override
     protected Expression transformArgumentExpression(ArgumentExpression expression, TransformContext context) {
         final PreonFunction function = context.getParent(PreonFunction.class);
-
-        // TODO : check not existent argument
-        return new ArgumentExpression(function.getArgumentType(expression.getName()), expression.getName());
+        final Type type = function.getArgumentType(expression.getName());
+        if (type == Type.ANY) {
+            addError(new TransformError("Not defined argument usage of '" + expression.getName() + "' in function '" + function.getName() + "'."));
+            return super.transformArgumentExpression(expression, context);
+        }
+        return new ArgumentExpression(type, expression.getName());
     }
 }
