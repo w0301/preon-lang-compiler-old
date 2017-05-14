@@ -78,6 +78,10 @@ public class NativeFunction extends Function {
                 new Signature("arg0 * arg1", Type.FLOAT, Type.FLOAT, Type.FLOAT)
             ),
             new NativeFunction(
+                "%",
+                new Signature("arg0 % arg1", Type.INT, Type.INT, Type.INT)
+            ),
+            new NativeFunction(
                 "&&",
                 new Signature("arg0 && arg1", Type.BOOL, Type.BOOL, Type.BOOL)
             ),
@@ -134,15 +138,29 @@ public class NativeFunction extends Function {
                 new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.STRING),
                 new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.INT),
                 new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.FLOAT),
+                new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.CHAR),
                 new Signature("arg0 + (arg1 ? \"True\" : \"False\")", Type.STRING, Type.STRING, Type.BOOL)
             ),
             new NativeFunction(
+                "not",
+                new Signature("!arg0", Type.BOOL, Type.BOOL)
+            ),
+            new NativeFunction(
                 "toInt",
-                new Signature("(int)arg0", Type.INT, Type.FLOAT)
+                new Signature("(int)arg0", Type.INT, Type.FLOAT),
+                new Signature("(int)arg0", Type.INT, Type.CHAR),
+                new Signature("arg0 ? 1 : 0", Type.INT, Type.BOOL)
             ),
             new NativeFunction(
                 "toFloat",
                 new Signature("(double)arg0", Type.FLOAT, Type.INT)
+            ),
+            new NativeFunction(
+                "toString",
+                new Signature("\"\" + arg0", Type.STRING, Type.INT),
+                new Signature("\"\" + arg0", Type.STRING, Type.FLOAT),
+                new Signature("\"\" + arg0", Type.STRING, Type.CHAR),
+                new Signature("arg0 ? \"True\" : \"False\"", Type.STRING, Type.BOOL)
             )
         };
         nativeFunctions = Stream.of(functions).collect(Collectors.toMap(f -> f.getName(), f -> f));

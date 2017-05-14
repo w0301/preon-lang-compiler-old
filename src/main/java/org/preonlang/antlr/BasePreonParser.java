@@ -18,6 +18,7 @@ public abstract class BasePreonParser extends Parser {
         putOperator("-", 2, true);
         putOperator("*", 3, true);
         putOperator("/", 3, true);
+        putOperator("%", 3, true);
         putOperator("^", 4, true);
         putOperator("<", 1, true);
         putOperator(">", 1, true);

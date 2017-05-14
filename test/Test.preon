@@ -1,15 +1,24 @@
 
-not : Bool -> Bool
-not b =
-  if b then False else True
+factorial : Int -> Int
+factorial a =
+  if a == 1 then 1 else a * factorial (a - 1)
   ;
 
-func : Int -> String
-func a =
-  "Bla bla : " ++ if a /= 12 then "yes" else "no"
+isPrimeHelper : Int -> Int -> Bool
+isPrimeHelper num d =
+  if num <= 1 then False
+  else if d == 1 then True
+  else if num % d == 0 then False
+  else isPrimeHelper num (d - 1)
   ;
-    
+
+isPrime : Int -> Bool
+isPrime num = isPrimeHelper num (num / 2) ;
+
 main : String
 main =
-  "Hello world : " ++ toInt (123.123 + 321) ++ "\n" ++ func 2
+  "10! = " ++ factorial 10
+  ++ "\n" ++
+  "601 primality = " ++ isPrime 601
+  ++ "\n"
   ;
