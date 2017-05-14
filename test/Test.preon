@@ -1,0 +1,27 @@
+
+not : Bool -> Bool
+not b =
+  if b then False else True
+  ;
+
+(/= 4l) : Int -> Int -> Bool
+(/=) n1 n2 = not (n1 == n2) ;
+
+(<= 4l) : Int -> Int -> Bool
+(<=) n1 n2 = (n1 < n2) || (n1 == n2) ;
+
+(> 4l) : Int -> Int -> Bool
+(>) n1 n2 = not (n2 < n1) ;
+
+(>= 4l) : Int -> Int -> Bool
+(>=) n1 n2 = (n1 > n2) || (n1 == n2) ;
+
+func : Int -> String
+func a =
+  "Bla bla : " ++ if a /= 12 then "yes" else "no"
+  ;
+
+main : String
+main =
+  "Hello world : " ++ toInt (123.123 + 321) ++ "\n" ++ func 2
+  ;

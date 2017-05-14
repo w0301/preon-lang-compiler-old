@@ -21,11 +21,29 @@ repositories {
 }
 
 dependencies {
-    compile 'org.antlr:antlr4:4.6'
+    compile 'org.antlr:antlr4:4.7'
 }
 
 sourceCompatibility = 1.8
 mainClassName = 'org.preonlang.MainClass'
+
+run {
+    args += ['test/Test.preon', 'build/test/java/']
+    doLast {
+        println 'Compiling Java source files...'
+
+        mkdir 'build/test/classes'
+        exec {
+            commandLine 'javac', '-d', 'build/test/classes', 'build/test/java/PreonClass.java'
+        }
+
+        println 'Running final program...'
+        exec {
+            workingDir 'build/test/classes'
+            commandLine 'java', 'preonlang.PreonClass'
+        }
+    }
+}
 
 // make the Java compile task depend on the antlr4 task
 compileJava.dependsOn antlr4

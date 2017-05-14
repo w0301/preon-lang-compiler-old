@@ -101,6 +101,13 @@ public class NativeFunction extends Function {
                 new Signature("arg0 < arg1", Type.BOOL, Type.FLOAT, Type.FLOAT)
             ),
             new NativeFunction(
+                "++",
+                new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.STRING),
+                new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.INT),
+                new Signature("arg0 + arg1", Type.STRING, Type.STRING, Type.FLOAT),
+                new Signature("arg0 + (arg1 ? \"True\" : \"False\")", Type.STRING, Type.STRING, Type.BOOL)
+            ),
+            new NativeFunction(
                 "toInt",
                 new Signature("(int)arg0", Type.INT, Type.FLOAT)
             ),

@@ -20,6 +20,17 @@ public class CheckTypesAndNamesTransformer extends ProgramTreeTransformer {
     }
 
     @Override
+    protected PreonFunction transformPreonFunction(PreonFunction function, TransformContext context) {
+        final PreonFunction res = super.transformPreonFunction(function, context);
+        if (res.getReturnType() != res.getExpression().getType()) {
+            addError(new TransformError("Function '" + function.getName() +
+                "' is declared to return '" + res.getReturnType().getName() + "' type but is returning '" +
+                res.getExpression().getType().getName() +"' type."));
+        }
+        return res;
+    }
+
+    @Override
     protected Expression transformFunctionCallExpression(FunctionCallExpression expression, TransformContext context) {
         Type calledType = Type.ANY;
         final Function calledFunction = functions.get(expression.getName());

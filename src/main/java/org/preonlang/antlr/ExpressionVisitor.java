@@ -42,6 +42,7 @@ public class ExpressionVisitor extends PreonParserBaseVisitor<Expression> {
     @Override
     public Expression visitOperatorExpression(PreonParser.OperatorExpressionContext ctx) {
         if (ctx.closedExpression() != null) return visitClosedExpression(ctx.closedExpression());
+        if (ctx.functionCallExpression() != null) return visitFunctionCallExpression(ctx.functionCallExpression());
 
         return new FunctionCallExpression(
             ctx.operator().getText(),

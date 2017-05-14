@@ -11,18 +11,14 @@ import org.preonlang.transform.*;
 
 public class MainClass {
     public static void main(String[] args) throws IOException {
-        final PreonLexer lexer = new PreonLexer(new ANTLRInputStream(
-            "fn1 : Int -> Int\n" +
-            "fn1 a = if a == 4 then 2 else 3 ;\n" +
-            "fn2 : Int -> Int\n" +
-            "fn2 a = fn1 12 ;\n" +
-            "main : Int\n" +
-            "main = fn2 132 ;\n"
-        ));
+        if (args.length < 2) {
+            System.out.println("Two command line argumnets are needed - file to compile and output directory path.");
+            System.exit(1);
+        }
+
+        final PreonLexer lexer = new PreonLexer(CharStreams.fromFileName(args[0]));
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final PreonParser parser = new PreonParser(tokens);
-
-        tokens.seek(0);
         final TransformResult transformedProgram = applyTransformers(
             new FileVisitor().visitFile(parser.file()),
             f -> new ArgumentToFunctionCallTransformer(),
@@ -35,15 +31,15 @@ public class MainClass {
                 System.out.println("Error: " + error.getMessage());
             }
             System.out.println("==== Compile errors ====");
+            System.exit(1);
         }
         else {
-            System.out.println("==== Java ====");
-
-            final PrintWriter writer = new PrintWriter(System.out);
+            new java.io.File(args[1]).mkdirs();
+            final PrintWriter writer = new PrintWriter(args[1] + "/PreonClass.java");
             transformedProgram.getFile().writeJava(writer);
             writer.flush();
 
-            System.out.println("==== Java ====");
+            System.out.println("Compile Preon sourde files to Java successful.");
         }
     }
 

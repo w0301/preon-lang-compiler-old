@@ -19,6 +19,10 @@ public enum Type {
         this.javaCode = javaCode;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void writeJava(Writer writer) throws IOException {
         if (javaCode == null) throw new RuntimeException("Cannot use specified type for Java.");
         writer.write(javaCode);

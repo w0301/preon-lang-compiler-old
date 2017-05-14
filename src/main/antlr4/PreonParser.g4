@@ -58,6 +58,7 @@ closedExpression
 
 operatorExpression
   : closedExpression
+  | functionCallExpression
 
   | operatorExpression {getPrecedence(_input.LT(1)) == 9 && isLeftAssociative(_input.LT(1))}? operator operatorExpression
   | <assoc=right> operatorExpression {getPrecedence(_input.LT(1)) == 9}? operator operatorExpression
