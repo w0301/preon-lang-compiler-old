@@ -81,6 +81,10 @@ OPERATOR_PRECEDENCE
   : [1-9] [lr]
   ;
 
+COMMENT_SKIP
+  :  '#' ~( '\r' | '\n' )* -> channel(HIDDEN)
+  ;
+
 WHITESPACE_SKIP
   : [\r\n \t]+ -> channel(HIDDEN)
   ;

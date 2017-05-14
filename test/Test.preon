@@ -1,9 +1,11 @@
 
+# Factoring computing
 factorial : Int -> Int
 factorial a =
   if a == 1 then 1 else a * factorial (a - 1)
   ;
 
+# Prime testing
 isPrimeHelper : Int -> Int -> Bool
 isPrimeHelper num d =
   if num <= 1 then False
@@ -15,6 +17,7 @@ isPrimeHelper num d =
 isPrime : Int -> Bool
 isPrime num = isPrimeHelper num (num / 2) ;
 
+# Entry point
 main : String
 main =
   "10! = " ++ factorial 10
