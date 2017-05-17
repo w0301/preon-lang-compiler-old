@@ -67,14 +67,11 @@ RPAREN
   : ')'
   ;
 
-DEFINITION_DELIM
-  : ';'
-  ;
-
 // + - * / & | > < ^ = , %
 // P M S D A O G L K E C Q
 OPERATOR
-  : [+\-*/&|><^=,%]+
+  : [+\-*/&|><^,%]+
+  | [+\-*/&|><^,%]* '=' [+\-*/&|><^,%=]*
   ;
 
 OPERATOR_PRECEDENCE
@@ -86,5 +83,5 @@ COMMENT_SKIP
   ;
 
 WHITESPACE_SKIP
-  : [\r\n \t]+ -> channel(HIDDEN)
+  : [\r\n \t] -> channel(HIDDEN)
   ;

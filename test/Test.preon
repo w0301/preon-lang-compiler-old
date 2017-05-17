@@ -3,7 +3,6 @@
 factorial : Int -> Int
 factorial a =
   if a == 1 then 1 else a * factorial (a - 1)
-  ;
 
 # Prime testing
 isPrimeHelper : Int -> Int -> Bool
@@ -12,10 +11,9 @@ isPrimeHelper num d =
   else if d == 1 then True
   else if num % d == 0 then False
   else isPrimeHelper num (d - 1)
-  ;
 
 isPrime : Int -> Bool
-isPrime num = isPrimeHelper num (num / 2) ;
+isPrime num = isPrimeHelper num (num / 2)
 
 # Entry point
 main : String
@@ -24,4 +22,3 @@ main =
   ++ "\n" ++
   "601 primality = " ++ isPrime 601
   ++ "\n"
-  ;

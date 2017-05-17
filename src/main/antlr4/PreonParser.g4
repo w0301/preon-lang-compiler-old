@@ -108,7 +108,7 @@ argumentType
 
 functionDefinition
   : functionNameIdentifier COLON (argumentType DEFINITION_ARG_SEPARATOR)* type
-    functionNameIdentifier (identifier)* EQ expression DEFINITION_DELIM
+    functionNameIdentifier (identifier)* EQ expression
   ;
 
 operatorPrecedence
@@ -121,9 +121,9 @@ operatorNameIdentifier
 
 operatorDefinition
   : LPAREN operatorNameIdentifier operatorPrecedence RPAREN COLON argumentType DEFINITION_ARG_SEPARATOR argumentType DEFINITION_ARG_SEPARATOR type
-    LPAREN operatorNameIdentifier RPAREN identifier identifier EQ expression DEFINITION_DELIM
+    LPAREN operatorNameIdentifier RPAREN identifier identifier EQ expression
   ;
 
 file
-  : (functionDefinition | operatorDefinition)* EOF
+  : (functionDefinition | operatorDefinition)*
   ;
