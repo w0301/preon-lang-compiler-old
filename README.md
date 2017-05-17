@@ -12,6 +12,31 @@ of native function invocation.
 
 # Current state
 
-
-
+- Following primitive types are supported: Bool, Char, Int, Float, String
+- Defining functions is supported:
+  ```
+  greet : String -> String
+  greet name = "Hello: " ++ name
+  ```
+- Defining binary infix operators with specified precedence (1-9) and
+  associativity (l, r) is supported:
+  ```
+  (<> 9l) : Int -> Int -> String
+  (<>) num1 num2 = "(" ++ num1 ++ ", " ++ num2 ++ ")"
+  ```
+- If conditions are supported:
+  ```
+  foo : Int -> String
+  foo num = if num < 10 then "less than 10"
+            else if num < 20 then "less than 20"
+            else "really big number"
+  ```
+- Recursive function calls are supported:
+  ```
+  isPrime : Int -> Int -> Bool
+  isPrime num d = if num <= 1 then False
+                  else if d == 1 then True
+                  else if num % d == 0 then False
+                  else isPrime num (d - 1)
+  ```
 # To be implemented
