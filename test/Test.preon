@@ -15,6 +15,9 @@ isPrimeHelper num d =
 isPrime : Int -> Bool
 isPrime num = isPrimeHelper num (num / 2)
 
+(>> 5l) : Int -> Int -> Bool
+(>>) num1 num2 = num1 == num2
+
 # Entry point
 main : String
 main =

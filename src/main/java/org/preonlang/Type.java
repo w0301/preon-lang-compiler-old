@@ -3,20 +3,31 @@ package org.preonlang;
 import java.io.IOException;
 import java.io.Writer;
 
-public enum Type {
-    BOOL("Bool", "boolean"),
-    INT("Int", "int"),
-    FLOAT("Float", "double"),
-    CHAR("Char", "char"),
-    STRING("String", "String"),
-    ANY(null, null);
+public class Type {
+    public static final Type BOOL = new Type("Bool", "boolean");
+    public static final Type INT = new Type("Int", "int");
+    public static final Type FLOAT = new Type("Float", "double");
+    public static final Type CHAR = new Type("Char", "char");
+    public static final Type STRING = new Type("String", "String");
+    public static final Type ANY = new Type(null, null);
+
+    public static final Type[] PRIMITIVE_TYPES = new Type[] {
+        BOOL, INT, FLOAT, CHAR, STRING
+    };
 
     private final String name;
     private final String javaCode;
 
-    Type(String name, String javaCode) {
+    private Type(String name, String javaCode) {
         this.name = name;
         this.javaCode = javaCode;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj.getClass() == getClass() &&
+            ((name != null && name.equals(((Type)obj).getName())) ||
+                (name == null && name == ((Type)obj).getName()));
     }
 
     public String getName() {
@@ -29,7 +40,7 @@ public enum Type {
     }
 
     public static Type fromName(String name) {
-        for (Type type : values()) {
+        for (Type type : PRIMITIVE_TYPES) {
             if (type.name != null && type.name.equals(name)) return type;
         }
         return Type.ANY;

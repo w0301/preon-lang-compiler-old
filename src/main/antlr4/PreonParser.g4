@@ -102,8 +102,13 @@ functionNameIdentifier
   : identifier
   ;
 
+argumentFunctionType
+  : LPAREN (type DEFINITION_ARG_SEPARATOR)* type RPAREN
+  ;
+
 argumentType
   : type
+  | argumentFunctionType
   ;
 
 functionDefinition
